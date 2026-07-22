@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Checklist de Emergencia — Barrio Los Ceibos</title>
+<meta name="description" content="Checklist de insumos básicos de preparación para emergencias, por etapas: 1 semana, 1 mes y 3 meses.">
+<meta name="theme-color" content="#1B2733">
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Emergencia">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<button type="button" class="menu-toggle" id="menuToggle" aria-controls="sideNav" aria-expanded="false" aria-label="Abrir menú de categorías">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="nav-overlay" id="navOverlay" hidden></div>
+
+<nav class="side-nav" id="sideNav" aria-label="Categorías del checklist">
+  <p class="nav-label">Categorías</p>
+  <ul id="sideNavList"></ul>
+</nav>
+
+<div class="app-content">
+  <header class="hero">
+    <div class="eyebrow">Preparación personal y familiar · <span class="tag">Barrio Los Ceibos</span></div>
+    <h1>Checklist de insumos básicos para sobrevivir por tu cuenta</h1>
+    <p class="sub">Por persona. Construye tu reserva en tres etapas: primero una semana, luego un mes, y finalmente tres meses. No necesitas comprarlo todo de una vez.</p>
+    <div class="principle"><b>Cómo calcular:</b> toma lo que consumes en un día y multiplícalo × 7 para la semana, × 30 para el mes, × 90 para los tres meses. Guarda alimentos que ya comes habitualmente y rota el stock.</div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 0 marcados</div>
+    </div>
+  </header>
+
+  <div class="install-banner" id="installBanner">
+    Podés instalar esta guía en tu celular para usarla sin conexión.
+    <button id="installBtn">Instalar</button>
+  </div>
+
+  <main id="checklist"></main>
+
+  <footer>
+    Basado en la orientación de autosuficiencia de la Iglesia y buenas prácticas de gestión de riesgos.
+    <br>Checklist de Emergencia · Barrio Los Ceibos · v1.0
+    <div><button class="reset" id="resetBtn">Reiniciar marcados</button></div>
+  </footer>
+</div>
+
+<div class="font-controls" role="group" aria-label="Ajustar tamaño de letra">
+  <button id="fontMinus" aria-label="Reducir tamaño de letra">−</button>
+  <span class="pct" id="fontPct">100%</span>
+  <button id="fontPlus" aria-label="Aumentar tamaño de letra">+</button>
+</div>
+
+<script src="./data/checklist.js"></script>
+<script src="./app.js"></script>
+
+</body>
+</html>

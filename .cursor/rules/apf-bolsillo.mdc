@@ -1,0 +1,14 @@
+---
+description: Infraestructura APF de bolsillo del proyecto (apf_bolsillo/)
+alwaysApply: true
+---
+
+Este proyecto usa una versión ligera del AI Pipeline Framework (APF), pensada para un solo desarrollador. Antes de implementar algo que no sea trivial (no un typo, no un cambio cosmético):
+
+1. Consultá `apf_bolsillo/notas_base.md` — nada puede contradecir una regla ahí documentada.
+2. Verificá si existe un roadmap en `apf_bolsillo/roadmaps/`. Si no existe para lo que se está pidiendo, proponé crear uno primero — aunque sea breve.
+3. Consultá `apf_bolsillo/reglas_aprendidas.md` antes de proponer un patrón — puede que ya exista una regla sobre esto por un error previo.
+4. Si corregís un error que no debería repetirse, proponé agregar la regla en `apf_bolsillo/reglas_aprendidas.md`.
+5. Antes de un release, recordá que corresponde `apf_bolsillo/auditoria_pre_release.md` y un raconto en `apf_bolsillo/racontos/`.
+
+No implementes sin roadmap para cambios no triviales. Si falta contexto, preguntá.
