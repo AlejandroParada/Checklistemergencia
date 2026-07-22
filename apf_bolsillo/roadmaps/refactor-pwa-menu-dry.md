@@ -1,8 +1,8 @@
 # Roadmap — Refactor PWA: menú lateral, DRY y alineación GitHub Pages
 
-**Fecha:** 2026-07-21 · **Estado:** en progreso
+**Fecha:** 2026-07-21 · **Estado:** hecho (2026-07-22) — Fases A–E + cierre APF
 
-**Progreso por fase:** A–D hechas (2026-07-21) · E pendiente
+**Progreso por fase:** A–E hechas · cierre APF (auditoría + raconto) 2026-07-22
 
 **URL Pages prevista:** `https://AlejandroParada.github.io/Checklistemergencia/` — el `id` del manifest es `/Checklistemergencia/` (nombre real del repo en GitHub).
 
@@ -45,7 +45,7 @@ Reglas nuevas que conviene documentar en `notas_base.md` al implementar (o antes
 | Alta | Menú lateral responsive | ✅ Hecho 2026-07-21 |
 | Media | Separar CSS/JS + actualizar SW | ✅ Hecho 2026-07-21 |
 | Media | Ajustes `manifest.json` | ✅ Hecho 2026-07-21 |
-| Baja | Offline tipografía, `.nojekyll`, ícono Apple, Open Graph | Mejoras de pulido; no bloquean el uso principal |
+| Baja | Offline tipografía, `.nojekyll`, ícono Apple, Open Graph | ✅ Hecho 2026-07-22 (preconnect gstatic; Apple 180; OG; `.nojekyll` ya desde C; self-host woff2 aplazado) |
 
 ## Pasos de implementación (con justificación de las decisiones no obvias)
 
@@ -79,17 +79,17 @@ Reglas nuevas que conviene documentar en `notas_base.md` al implementar (o antes
 15. ⏭️ `screenshots` omitidos (sin capturas reales aún); se pueden agregar en Fase E o al publicar si hace falta enriquecer el diálogo de instalación.
 16. Cache SW bump a `checklist-emergencia-v5` (manifest en precache).
 
-### Fase E — Pulido (prioridad baja)
+### Fase E — Pulido (prioridad baja) ✅ 2026-07-22
 
-16. `preconnect` a `fonts.gstatic.com` y/o auto-hospedar `.woff2` locales + precache — Justificación: tipografía offline y menos dependencia de Google.
-17. Ícono Apple dedicado 180×180 con fondo sólido; meta Open Graph básicas para compartir por WhatsApp.
-18. Revisar áreas táctiles (checkboxes vía padding de `li`, botones de fuente ≥ 44px).
+16. ✅ `preconnect` a `fonts.googleapis.com` + `fonts.gstatic.com` (`crossorigin`). Auto-hospedar `.woff2` aplazado (menos peso/ops); tipografía offline dura documentada en raconto.
+17. ✅ Ícono Apple `icons/apple-touch-icon-180.png` (fondo sólido navy) + meta Open Graph / Twitter básicas.
+18. ✅ Áreas táctiles: steppers del hogar ≥44px; resto de controles top/nav/fuente ya cumplían.
 
-### Cierre APF (antes de publicar)
+### Cierre APF (antes de publicar) ✅ 2026-07-22
 
-19. Pasar `apf_bolsillo/auditoria_pre_release.md`.
-20. Escribir raconto en `apf_bolsillo/racontos/` (qué se hizo, qué se descartó, impacto).
-21. Si durante la implementación aparece un error que no debería repetirse (p. ej. regenerar `data-id` y borrar progreso), agregar entrada en `reglas_aprendidas.md`.
+19. ✅ `apf_bolsillo/auditoria_pre_release.md` — fila v1.7.
+20. ✅ Raconto `apf_bolsillo/racontos/2026-07-22-release-v1.7.md`.
+21. ✅ Reglas en `reglas_aprendidas.md` (cache SW, escapeHtml en URLs, comillas JS).
 
 ## Riesgos identificados
 

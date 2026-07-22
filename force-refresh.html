@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Actualizar app — Checklist</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#0E1620;color:#F3EEE4;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:1.5rem;text-align:center}
+  p{max-width:22rem;line-height:1.45}
+  .ok{color:#C9A227}
+</style>
+</head>
+<body>
+<p id="msg">Limpiando caché y actualizando…</p>
+<script>
+(async function () {
+  var msg = document.getElementById("msg");
+  try {
+    if ("serviceWorker" in navigator) {
+      var regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(function (r) { return r.unregister(); }));
+    }
+    if ("caches" in window) {
+      var keys = await caches.keys();
+      await Promise.all(keys.map(function (k) { return caches.delete(k); }));
+    }
+    msg.innerHTML = 'Listo. Abriendo la app actualizada…<br><span class="ok">v1.8</span>';
+  } catch (e) {
+    msg.textContent = "Limpieza parcial. Redirigiendo…";
+  }
+  setTimeout(function () {
+    window.location.replace("./index.html?v=32&t=" + Date.now());
+  }, 700);
+})();
+</script>
+</body>
+</html>

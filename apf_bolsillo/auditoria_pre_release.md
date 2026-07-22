@@ -13,4 +13,4 @@ Una revisión antes de cada release (no antes de cada roadmap individual — esa
 
 | Fecha | Release | Hallazgos | ¿Bloquea el release? |
 |---|---|---|---|
-| | | | |
+| 2026-07-22 | v1.7 | Alineación con `notas_base` OK (guides/contacts/places fuera del progreso). Fuentes de «Qué hacer si…» citadas. SW network-first en shell + `force-refresh.html`. Tipografía aún depende de Google Fonts (documentado; no bloquea uso principal). Números de líderes cargados por el barrio. | No |

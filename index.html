@@ -3,26 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Checklist de Emergencia — Barrio Los Ceibos</title>
-<meta name="description" content="Checklist de insumos básicos de preparación para emergencias, por etapas: 1 semana, 1 mes y 3 meses.">
-<meta name="theme-color" content="#1B2733">
+<title>Checklist de emergencia — Barrio Los Ceibos</title>
+<meta name="description" content="Checklist de preparación para emergencias del Barrio Los Ceibos: etapas, botiquín, contactos, abastecimiento y qué hacer si…">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="theme-color" content="#1B2733" id="metaThemeColor">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_UY">
+<meta property="og:title" content="Checklist de emergencia — Barrio Los Ceibos">
+<meta property="og:description" content="Guía interactiva de preparación familiar: checklist por etapas, contactos útiles y qué hacer ante emergencias.">
+<meta property="og:image" content="./icons/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Checklist de emergencia — Barrio Los Ceibos">
+<meta name="twitter:description" content="Guía interactiva de preparación familiar para emergencias.">
+<meta name="twitter:image" content="./icons/icon-512.png">
 
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png" sizes="180x180">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Emergencia">
 
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem("checklistTheme");
+    document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./styles.css?v=32">
 </head>
 <body>
 
 <button type="button" class="menu-toggle" id="menuToggle" aria-controls="sideNav" aria-expanded="false" aria-label="Abrir menú de categorías">
   <span></span><span></span><span></span>
 </button>
+
+<div class="top-actions">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a modo claro">
+    <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+    <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+  </button>
+  <button type="button" class="info-toggle" id="infoToggle" aria-controls="infoPanel" aria-expanded="false" aria-label="Abrir info y ajustes">ⓘ</button>
+</div>
 
 <div class="nav-overlay" id="navOverlay" hidden></div>
 
@@ -31,12 +63,29 @@
   <ul id="sideNavList"></ul>
 </nav>
 
+<aside class="info-panel" id="infoPanel" hidden role="dialog" aria-labelledby="infoPanelTitle">
+  <div class="info-panel-head">
+    <h2 id="infoPanelTitle">Info y ajustes</h2>
+    <button type="button" class="info-close" id="infoClose" aria-label="Cerrar">×</button>
+  </div>
+  <p id="infoIntro"></p>
+  <div class="principle">
+    <b id="infoPrincipleTitle"></b>
+    <p id="infoPrinciple"></p>
+  </div>
+  <p class="info-hint" id="infoHouseholdHint"></p>
+  <div class="font-controls-inline" role="group" aria-label="Ajustar tamaño de letra">
+    <span class="font-label">Tamaño de letra</span>
+    <button type="button" id="fontMinus" aria-label="Reducir tamaño de letra">−</button>
+    <span class="pct" id="fontPct">100%</span>
+    <button type="button" id="fontPlus" aria-label="Aumentar tamaño de letra">+</button>
+  </div>
+</aside>
+
 <div class="app-content">
   <header class="hero">
-    <div class="eyebrow">Preparación personal y familiar · <span class="tag">Barrio Los Ceibos</span></div>
-    <h1>Checklist de insumos básicos para sobrevivir por tu cuenta</h1>
-    <p class="sub">Por persona. Construye tu reserva en tres etapas: primero una semana, luego un mes, y finalmente tres meses. No necesitas comprarlo todo de una vez.</p>
-    <div class="principle"><b>Cómo calcular:</b> toma lo que consumes en un día y multiplícalo × 7 para la semana, × 30 para el mes, × 90 para los tres meses. Guarda alimentos que ya comes habitualmente y rota el stock.</div>
+    <div class="eyebrow" id="appEyebrow">Preparación familiar · <span class="tag">Barrio Los Ceibos</span></div>
+    <h1 id="appTitle">Checklist de emergencia</h1>
     <div class="progress-wrap">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       <div class="progress-label" id="progressLabel">0 / 0 marcados</div>
@@ -52,19 +101,40 @@
 
   <footer>
     Basado en la orientación de autosuficiencia de la Iglesia y buenas prácticas de gestión de riesgos.
-    <br>Checklist de Emergencia · Barrio Los Ceibos · v1.0
+    <br>Checklist de Emergencia · Barrio Los Ceibos · v1.8
     <div><button class="reset" id="resetBtn">Reiniciar marcados</button></div>
   </footer>
 </div>
 
-<div class="font-controls" role="group" aria-label="Ajustar tamaño de letra">
-  <button id="fontMinus" aria-label="Reducir tamaño de letra">−</button>
-  <span class="pct" id="fontPct">100%</span>
-  <button id="fontPlus" aria-label="Aumentar tamaño de letra">+</button>
+<div class="household-dock" id="householdDock">
+  <div class="household-bar" id="householdBar" role="group" aria-label="Tamaño del hogar">
+    <div class="household-row">
+      <div class="stepper">
+        <span class="stepper-label">Adultos</span>
+        <div class="stepper-controls">
+          <button type="button" id="adultMinus" aria-label="Menos adultos">−</button>
+          <span class="stepper-value" id="adultCount">1</span>
+          <button type="button" id="adultPlus" aria-label="Más adultos">+</button>
+        </div>
+      </div>
+      <div class="stepper">
+        <span class="stepper-label">Menores</span>
+        <div class="stepper-controls">
+          <button type="button" id="minorMinus" aria-label="Menos menores">−</button>
+          <span class="stepper-value" id="minorCount">0</span>
+          <button type="button" id="minorPlus" aria-label="Más menores">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="household-toggle" id="householdToggle" aria-controls="householdBar" aria-expanded="true" aria-label="Ocultar ajustes del hogar">
+    <span class="household-toggle-icon" aria-hidden="true">👨‍👩‍👧‍👦</span>
+  </button>
 </div>
 
-<script src="./data/checklist.js"></script>
-<script src="./app.js"></script>
+<script src="./data/ui.js?v=32"></script>
+<script src="./data/checklist.js?v=32"></script>
+<script src="./app.js?v=32"></script>
 
 </body>
 </html>
