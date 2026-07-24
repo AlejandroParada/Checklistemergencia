@@ -661,6 +661,130 @@ var CHECKLIST = [
     ]
   },
   {
+    id: "esencial-precaucion",
+    emoji: "⚠️",
+    title: "Esencial precaución",
+    type: "guides",
+    intro: "Prevención y preparación proactiva. La mejor emergencia es la que se previene a tiempo.",
+    guides: [
+      {
+        id: "principios-importante",
+        title: "Importante — Principios de prevención",
+        steps: [
+          "Si ya pasó antes, es probable que vuelva a pasar — aprendé de la experiencia previa.",
+          "Si nunca pasó antes, siempre hay una primera vez — no subestimes riesgos nuevos.",
+          "Si le pasó a un vecino es probable que me pueda pasar a mí — observá el entorno y preguntá.",
+          "Siempre anticipa vías alternativas de escape, no esperes a que el agua llegue a la puerta.",
+          "Identifica cuál es el lugar más seguro de la casa para estar en cada tipo de emergencia.",
+          "Si hay algún riesgo que identifiques, solicita ayuda para gestionarlo — no lo dejes para después."
+        ]
+      },
+      {
+        id: "verifica-cañada",
+        title: "Hay una cañada cerca con probabilidad de desborde",
+        steps: [
+          "Verificá el nivel del agua de la cañada o zanja cada día, especialmente en épocas de lluvia.",
+          "Si la vivienda tiene un segundo piso, asegurate de tener espacio para electrodomésticos portátiles y subelos con anticipación.",
+          "Las mascotas son parte de la familia: verificá con tiempo su resguardo y lugar seguro.",
+          "Desconectá o aislá toda instalación eléctrica para evitar riesgos cuando suba el agua.",
+          "Verificá que los puentes sean transitables sin riesgo y tengas rutas alternativas.",
+          "Los vehículos deben estar en un lugar seguro y elevado, lejos de la zona de inundación.",
+          "Limpiá los desagües de hojas, basura u obstrucciones para evitar acumulación de agua en tu propiedad.",
+          "Tené identificadas las rutas de evacuación y puntos de encuentro con la familia."
+        ]
+      },
+      {
+        id: "verifica-personas-vulnerables",
+        title: "Tengo bajo mi cuidado personas mayores, discapacitados, niños o embarazadas",
+        steps: [
+          "Verificá que tenés toda la medicación necesaria para el bienestar de cada persona a tu cuidado.",
+          "Asegurate de tener ropa de abrigo suficiente para evitar que pasen frío durante una emergencia.",
+          "Planificá con anticipación qué harás para resguardar la integridad física de las personas vulnerables.",
+          "Contactá a familiares y amigos con tiempo para coordinar apoyo y asistencia mutua.",
+          "Tené documentación médica actualizada y accesible (recetas, alergias, condiciones especiales).",
+          "Identificá el centro de salud más cercano y rutas alternativas para llegar.",
+          "Prepará un kit especial con elementos específicos (pañales, fórmula, medicamentos, etc.)."
+        ]
+      },
+      {
+        id: "verifica-arboles",
+        title: "Hay árboles grandes cerca y propensos a desprendimiento de ramas",
+        steps: [
+          "Verificá que no haya riesgo de caída de ramas grandes sobre la casa o vehículos.",
+          "Revisá el estado de las raíces del árbol: si llueve mucho, los árboles con viento no tienen sustento suficiente en suelo saturado.",
+          "Asegurate de que las ramas no bloqueen el acceso a la vivienda o a instalaciones eléctricas.",
+          "El crecimiento desbalanceado de ramas es un riesgo evitable con podas preventivas — consultá a un especialista.",
+          "Identificá árboles vecinos que también puedan afectar tu propiedad y conversá con los dueños.",
+          "Tené contactos de servicios de poda de emergencia y verificá cobertura del seguro."
+        ]
+      },
+      {
+        id: "verifica-estructura",
+        title: "La estructura edilicia es precaria (bloque sin revocar, chapa, cables sueltos)",
+        steps: [
+          "Verificá que el techo sea seguro y que soporte la fuerza de vientos — reforzá si es necesario.",
+          "Asegurate de que las ventanas y puertas tengan aislación suficiente para contener el frío exterior y mantener temperatura interior.",
+          "Verificá que los cables eléctricos no estén sueltos y cumplan con normativas mínimas de seguridad — pedí inspección.",
+          "El suelo debe tener material adecuado: si se humedece afuera, la humedad llegará al interior generando barro y problemas de salud.",
+          "Revisá el estado de cimientos y estructuras de soporte — consultá a un técnico si tenés dudas.",
+          "Tené plan de evacuación a casa de familiares/vecinos si la estructura no es segura en emergencias."
+        ]
+      },
+      {
+        id: "verifica-extranjero",
+        title: "Soy extranjero y no sé qué hacer en Uruguay",
+        steps: [
+          "Verificá que tenés todos los documentos necesarios actualizados (cédula, pasaporte, visas).",
+          "Asegurate de haber hecho todos los trámites requeridos por tu consulado y tenerlos al día.",
+          "Tené el teléfono de alguien referente de tu nacionalidad ya radicado que pueda orientarte.",
+          "Conectate con alguna comunidad por redes sociales de extranjeros residentes en Uruguay.",
+          "Informate sobre los pasos para tener cobertura social y derechos para acceder a trabajo legal.",
+          "Conocé los números de emergencia locales y cómo funciona el sistema de salud pública.",
+          "Tené identificada la ubicación de tu consulado y horarios de atención de emergencias."
+        ]
+      },
+      {
+        id: "verifica-clima-extremo",
+        title: "Clima extremo y eventos estacionales",
+        steps: [
+          "Olas de calor: asegurate de tener ventilación, hidratación extra y refugio fresco disponible.",
+          "Heladas: protegé tuberías externas, plantas y verificá que la calefacción funcione correctamente.",
+          "Granizo: identificá lugares seguros para vehículos y protección para plantas/cultivos.",
+          "Tormentas eléctricas: desconectá equipos sensibles y evitá lugares altos o con metal.",
+          "Vientos fuertes: asegurá objetos que puedan volarse y mantenete alejado de ventanas grandes.",
+          "Sequías prolongadas: planificá uso eficiente del agua y métodos de almacenamiento extra.",
+          "Seguí alertas meteorológicas y tené un plan para cada tipo de clima extremo esperado en la región."
+        ]
+      },
+      {
+        id: "verifica-servicios",
+        title: "Preparación para cortes de servicios prolongados",
+        steps: [
+          "Tené un plan de comunicación alternativo sin telefonía/internet (radio, puntos de encuentro).",
+          "Prepará reservas adicionales para cortes de agua extendidos más allá de lo normal.",
+          "Identificá alternativas para cocción sin gas (leña, alcohol, cocina solar).",
+          "Planificá gestión de residuos si no hay recolección por varios días.",
+          "Coordiná con vecinos para apoyo mutuo durante cortes prolongados de servicios.",
+          "Tené números alternativos de contacto de servicios públicos y cooperativas locales.",
+          "Conocé la ubicación de centros comunitarios que puedan funcionar como refugio temporal."
+        ]
+      },
+      {
+        id: "verifica-seguridad-hogar",
+        title: "Seguridad preventiva del hogar y alrededores",
+        steps: [
+          "Hacé verificación periódica de instalaciones eléctricas, gas y agua cada 6 meses.",
+          "Realizá mantenimiento preventivo de techos y estructuras antes de las temporadas de lluvia/viento.",
+          "Implementá control de plagas y roedores para evitar problemas de salud y estructurales.",
+          "Mejorá la seguridad contra intrusión con iluminación, cercos y sistemas de alerta.",
+          "Mantené el perímetro de la casa libre de materiales inflamables y objetos que puedan convertirse en proyectiles.",
+          "Establecé relaciones con vecinos para vigilancia mutua y apoyo en emergencias.",
+          "Tené herramientas básicas accesibles para reparaciones menores urgentes."
+        ]
+      }
+    ]
+  },
+  {
     id: "emergencias",
     emoji: "🚨",
     title: "Emergencias",

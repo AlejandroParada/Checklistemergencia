@@ -8,7 +8,7 @@
 - Cada ítem tiene un identificador estable (`data-id`); no se renombra ni se reutiliza sin plan de migración del estado guardado.
 - El progreso se mide como ítems marcados / total de ítems del catálogo (global; los paneles de tab ocultos siguen contando).
 - La navegación entre categorías es por tabs derivados del catálogo: una categoría visible a la vez.
-- Hay paneles `type: "contacts"`, `type: "places"` y `type: "guides"` («Qué hacer si…») sin checkboxes; no cuentan en el progreso global.
+- Hay paneles `type: "contacts"`, `type: "places"` y `type: "guides"` («Qué hacer si…», «Esencial precaución») sin checkboxes; no cuentan en el progreso global.
 - Los textos de `guides` son orientación; en emergencia real corresponde llamar al 911. Fuentes en la tabla de abajo.
 - "Salud" (botiquín/medicación) e "Higiene y limpieza" son categorías distintas; "Vestimenta y otros" es categoría propia.
 - En `contacts` con `whatsapp`, el ícono abre `https://api.whatsapp.com/send?phone=<598…>&text=hola`. En Android se usa `intent://…;package=com.whatsapp` para preferir WhatsApp normal (no Business).
@@ -47,6 +47,12 @@
 | Qué hacer si… — sismo / temblor | [SINAE — Sismos en Uruguay](https://www.gub.uy/sistema-nacional-emergencias/sismos) | 2026-07-22 | 2026-07-22 |
 | Qué hacer si… — serpiente / mordedura | [MSP — recomendaciones ofidismo](https://www.gub.uy/ministerio-salud-publica/comunicacion/noticias/recomendaciones-del-msp-por-caso-de-mordedura-de-ofidio); CIAT 1722 | 2026-07-22 | 2026-07-22 |
 | Qué hacer si… — descarga, aplastamiento, desmayo, respirar, auxilio, disparos | PAS + buenas prácticas de primeros auxilios; 911 | 2026-07-22 | 2026-07-22 |
+| Esencial precaución — principios de prevención | Guía familiar para la reducción de riesgos (SINAE) + buenas prácticas de gestión de riesgos | 2026-07-24 | 2026-07-24 |
+| Esencial precaución — preparación para inundaciones | Guía familiar para la reducción de riesgos (SINAE) + Plan de Contingencia Municipal | 2026-07-24 | 2026-07-24 |
+| Esencial precaución — cuidado de personas vulnerables | MSP protocolos de emergencias + IMPO normativas de accesibilidad | 2026-07-24 | 2026-07-24 |
+| Esencial precaución — prevención estructural y arbórea | Bomberos procedimientos + intendencia normativas de construcción | 2026-07-24 | 2026-07-24 |
+| Esencial precaución — orientación para extranjeros | Dirección Nacional de Migración + consulados + MIDES | 2026-07-24 | 2026-07-24 |
+| Esencial precaución — clima extremo y servicios | INUMET alertas meteorológicas + protocolos UTE/OSE | 2026-07-24 | 2026-07-24 |
 
 ## Decisiones de alcance
 

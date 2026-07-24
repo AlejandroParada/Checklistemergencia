@@ -1,12 +1,12 @@
-const CACHE_NAME = "checklist-emergencia-v32";
+const CACHE_NAME = "checklist-emergencia-v39";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=32",
+  "./styles.css?v=39",
   "./manifest.json",
-  "./app.js?v=32",
-  "./data/checklist.js?v=32",
-  "./data/ui.js?v=32",
+  "./app.js?v=39",
+  "./data/checklist.js?v=39",
+  "./data/ui.js?v=39",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-512-maskable.png",

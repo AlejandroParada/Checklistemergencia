@@ -40,12 +40,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=32">
+<link rel="stylesheet" href="./styles.css?v=39">
 </head>
 <body>
 
 <button type="button" class="menu-toggle" id="menuToggle" aria-controls="sideNav" aria-expanded="false" aria-label="Abrir menú de categorías">
   <span></span><span></span><span></span>
+</button>
+
+<button type="button" class="bag-quick-toggle" id="bagNavBtn" aria-controls="bagDrawer" aria-expanded="false" aria-label="Abrir mochila de emergencia">
+  <span class="emoji" aria-hidden="true">🎒</span>
+  <span class="bag-quick-label">Mochila de emergencia</span>
 </button>
 
 <div class="top-actions">
@@ -58,10 +63,12 @@
 
 <div class="nav-overlay" id="navOverlay" hidden></div>
 
-<nav class="side-nav" id="sideNav" aria-label="Categorías del checklist">
-  <p class="nav-label">Categorías</p>
-  <ul id="sideNavList"></ul>
-</nav>
+<div class="side-nav-wrap" id="sideNavWrap">
+  <nav class="side-nav" id="sideNav" aria-label="Menú principal">
+    <p class="nav-label">Menú</p>
+    <ul id="sideNavList"></ul>
+  </nav>
+</div>
 
 <aside class="info-panel" id="infoPanel" hidden role="dialog" aria-labelledby="infoPanelTitle">
   <div class="info-panel-head">
@@ -101,10 +108,27 @@
 
   <footer>
     Basado en la orientación de autosuficiencia de la Iglesia y buenas prácticas de gestión de riesgos.
-    <br>Checklist de Emergencia · Barrio Los Ceibos · v1.8
+    <br>Checklist de Emergencia · Barrio Los Ceibos · v1.11
     <div><button class="reset" id="resetBtn">Reiniciar marcados</button></div>
   </footer>
 </div>
+
+<button type="button" class="bag-toggle" id="bagToggle" aria-controls="bagDrawer" aria-expanded="false" aria-label="Cerrar mochila de emergencia">
+  <span class="bag-icon" aria-hidden="true">🎒</span>
+</button>
+
+<div class="bag-overlay" id="bagOverlay" hidden></div>
+
+<aside class="bag-drawer" id="bagDrawer" role="dialog" aria-labelledby="bagDrawerTitle" aria-modal="false" hidden>
+  <div class="bag-drawer-head">
+    <h2 id="bagDrawerTitle">Mochila de emergencia</h2>
+    <button type="button" class="bag-close" id="bagClose" aria-label="Cerrar mochila">×</button>
+  </div>
+  <p class="bag-intro">Categorías esenciales para tu preparación familiar</p>
+  <nav aria-label="Categorías de la mochila de emergencia">
+    <ul class="bag-nav-list" id="bagNavList" role="list"></ul>
+  </nav>
+</aside>
 
 <div class="household-dock" id="householdDock">
   <div class="household-bar" id="householdBar" role="group" aria-label="Tamaño del hogar">
@@ -132,9 +156,9 @@
   </button>
 </div>
 
-<script src="./data/ui.js?v=32"></script>
-<script src="./data/checklist.js?v=32"></script>
-<script src="./app.js?v=32"></script>
+<script src="./data/ui.js?v=39"></script>
+<script src="./data/checklist.js?v=39"></script>
+<script src="./app.js?v=39"></script>
 
 </body>
 </html>
