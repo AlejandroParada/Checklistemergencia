@@ -63,14 +63,18 @@ html[data-theme="light"]{ color-scheme: light; }
 body{
   margin:0; background:var(--bg); color:var(--text);
   font-family:'IBM Plex Sans', sans-serif; font-size:1rem; line-height:1.55;
-  padding-bottom: calc(var(--bar-h) + 1.5rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
   transition: background 0.2s ease, color 0.2s ease, padding-bottom 0.25s ease;
 }
-body.household-collapsed{
+body.bag-open{
+  padding-bottom: calc(var(--bar-h) + 1.5rem + env(safe-area-inset-bottom, 0px));
+}
+body.bag-open.household-collapsed{
   padding-bottom: calc(var(--bar-h-collapsed) + 1.25rem + env(safe-area-inset-bottom, 0px));
 }
 body.nav-open,
-body.info-open{ overflow:hidden; }
+body.info-open,
+body.bag-open{ overflow:hidden; }
 a{ color:var(--gold); }
 
 /* ---- Top toggles ---- */
@@ -89,6 +93,32 @@ a{ color:var(--gold); }
 body.nav-open .menu-toggle span:nth-child(1){ transform:translateY(0.35rem) rotate(45deg); }
 body.nav-open .menu-toggle span:nth-child(2){ opacity:0; }
 body.nav-open .menu-toggle span:nth-child(3){ transform:translateY(-0.35rem) rotate(-45deg); }
+
+/* Botón de acceso directo a la mochila: en pantalla principal, debajo del menú hamburguesa */
+.bag-quick-toggle{
+  position:fixed; top:calc(0.65rem + 2.75rem + 0.55rem + env(safe-area-inset-top, 0px)); left:0.65rem;
+  z-index:60; width:2.75rem; height:2.75rem; min-width:44px; min-height:44px;
+  border-radius:0.55rem; border:1px solid var(--line); cursor:pointer;
+  background:var(--btn-bg); backdrop-filter:blur(6px); color:var(--text);
+  box-shadow:var(--shadow); transition:background 0.2s ease, transform 0.2s ease;
+  display:flex; align-items:center; justify-content:center; gap:0.5rem;
+  font-family:inherit; font-size:0.9rem; font-weight:600; padding:0;
+}
+.bag-quick-toggle .emoji{ font-size:1.3rem; line-height:1; }
+.bag-quick-toggle .bag-quick-label{ display:none; }
+.bag-quick-toggle:hover{ transform:scale(1.05); }
+body.bag-open .bag-quick-toggle{ background:rgba(201,151,61,0.25); border-color:var(--gold); }
+
+/*
+ * Menú principal o mochila abiertos: hamburguesa + acceso mochila quedan tapados.
+ * Familia: oculta por defecto y con menú principal; solo visible con drawer mochila.
+ */
+body.nav-open .menu-toggle,
+body.nav-open .bag-quick-toggle,
+body.bag-open .menu-toggle,
+body.bag-open .bag-quick-toggle{
+  visibility:hidden; pointer-events:none;
+}
 
 .top-actions{
   position:fixed; top:calc(0.65rem + env(safe-area-inset-top, 0px)); right:0.65rem;
@@ -121,14 +151,20 @@ body.nav-open .nav-overlay,
 body.info-open .nav-overlay{ display:block; }
 
 /* ---- Side nav ---- */
-.side-nav{
+.side-nav-wrap{
   position:fixed; top:0; left:0; bottom:0; width:min(var(--nav-width), 86vw);
-  z-index:58; background:var(--surface); border-right:1px solid var(--line);
-  padding: calc(4.5rem + env(safe-area-inset-top, 0px)) 0.9rem 1.5rem;
-  transform:translateX(-105%); transition:transform 0.25s ease, background 0.2s ease;
-  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  z-index:58; display:flex; flex-direction:column;
+  transform:translateX(-105%); transition:transform 0.25s ease;
 }
-body.nav-open .side-nav{ transform:translateX(0); }
+body.nav-open .side-nav-wrap{ transform:translateX(0); }
+
+.side-nav{
+  flex:1 1 auto; min-height:0;
+  background:var(--surface); border-right:1px solid var(--line);
+  padding: calc(4.5rem + env(safe-area-inset-top, 0px)) 0.9rem 1rem;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  transition: background 0.2s ease;
+}
 .side-nav .nav-label{
   font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
   color:var(--muted); font-weight:600; margin:0 0.4rem 0.7rem;
@@ -177,6 +213,86 @@ body.info-open .info-panel[hidden]{ visibility:visible; pointer-events:auto; }
 }
 .info-panel .principle b{ color:var(--gold); display:block; margin-bottom:0.35rem; }
 .info-panel .principle p{ margin:0; }
+
+/* ---- Bag drawer (mochila de emergencia) ---- */
+.bag-toggle{
+  position:fixed; bottom:calc(5.5rem + env(safe-area-inset-bottom, 0px)); right:1rem;
+  z-index:58; width:3.5rem; height:3.5rem; min-width:48px; min-height:48px;
+  border-radius:50%; border:1px solid var(--line); cursor:pointer;
+  background:var(--btn-bg); backdrop-filter:blur(6px); color:var(--text);
+  box-shadow:var(--shadow); transition:transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  display:none; align-items:center; justify-content:center;
+}
+.bag-toggle:hover{ transform:scale(1.05); }
+.bag-toggle .bag-icon{ font-size:1.4rem; }
+body.bag-open .bag-toggle{
+  display:flex; transform:scale(0.9);
+}
+body.nav-open .bag-toggle,
+body.info-open .bag-toggle{
+  display:none !important;
+}
+body.household-collapsed .bag-toggle{
+  bottom:calc(4.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+.bag-overlay{
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:56;
+  background:var(--overlay); opacity:0; pointer-events:none;
+  transition:opacity 0.25s ease;
+}
+body.bag-open .bag-overlay{ opacity:1; pointer-events:auto; }
+.bag-overlay[hidden]{ display:block !important; visibility:hidden; }
+body.bag-open .bag-overlay[hidden]{ visibility:visible; }
+
+.bag-drawer{
+  position:fixed; top:0; left:0; bottom:0; width:min(18rem, 90vw);
+  z-index:57; background:var(--surface); border-right:1px solid var(--line);
+  padding: calc(1.1rem + env(safe-area-inset-top, 0px)) 1.1rem 1.5rem;
+  transform:translateX(-105%); transition:transform 0.25s ease, background 0.2s ease;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+body.bag-open .bag-drawer{ transform:translateX(0); }
+.bag-drawer[hidden]{ display:block !important; visibility:hidden; pointer-events:none; }
+body.bag-open .bag-drawer[hidden]{ visibility:visible; pointer-events:auto; }
+
+.bag-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.9rem;
+}
+.bag-drawer-head h2{
+  margin:0; font-family:'Lora',serif; font-size:1.15rem; color:var(--gold);
+}
+.bag-close{
+  width:2.5rem; height:2.5rem; border:1px solid var(--line); border-radius:0.45rem;
+  background:transparent; color:var(--text); font-size:1.4rem; cursor:pointer; line-height:1;
+}
+.bag-intro{
+  font-size:0.88rem; color:var(--text-soft); margin:0 0 1.2rem;
+}
+
+.bag-nav-list{
+  list-style:none; margin:0; padding:0;
+}
+.bag-nav-list button{
+  display:flex; align-items:center; gap:0.6rem; width:100%;
+  padding:0.8rem 0.8rem; min-height:48px; border-radius:0.5rem;
+  border:1px solid transparent; background:transparent; cursor:pointer; text-align:left;
+  color:var(--text-soft); font-family:inherit; font-size:0.9rem; font-weight:500;
+  margin-bottom:0.3rem; transition:all 0.2s ease;
+}
+.bag-nav-list button:hover{ background:var(--tier-bg); color:var(--text); }
+.bag-nav-list button.is-active{
+  background:rgba(201,151,61,0.18); color:var(--text);
+  border-color: var(--line);
+}
+.bag-nav-list button .emoji{ font-size:1.2rem; flex:0 0 auto; }
+.bag-nav-list button .bag-category-info{
+  flex:1; display:flex; flex-direction:column; gap:0.15rem;
+}
+.bag-nav-list button .bag-category-title{ font-weight:600; }
+.bag-nav-list button .bag-category-progress{
+  font-size:0.75rem; color:var(--muted); font-weight:400;
+}
 
 .font-controls-inline{
   display:flex; align-items:center; gap:0.25rem; flex-wrap:wrap;
@@ -361,6 +477,17 @@ footer .reset{
   gap: 0.55rem;
   width: auto;
   max-width: none;
+  visibility:hidden;
+  pointer-events:none;
+}
+body.bag-open .household-dock{
+  visibility:visible;
+  pointer-events:auto;
+  z-index:59;
+}
+body.nav-open .household-dock{
+  visibility:hidden;
+  pointer-events:none;
 }
 body:not(.household-collapsed) .household-dock{
   justify-content: space-between;
@@ -437,11 +564,20 @@ body.household-collapsed .household-bar{
   body.nav-open{ overflow:auto; }
   body:not(.info-open) .nav-overlay{ display:none !important; }
   body.info-open .nav-overlay{ display:block !important; }
-  .side-nav{
-    transform:none; padding-top:1.5rem;
+  .side-nav-wrap{
+    transform:none;
     position:fixed; z-index:10;
   }
+  .side-nav{ padding-top:1.5rem; }
   .app-content{ margin-left: var(--nav-width); }
+
+  /* Sin hamburguesa en desktop: el acceso a la mochila queda anclado al pie del menú */
+  .bag-quick-toggle{
+    top:auto; left:0.9rem; bottom:1.1rem;
+    width:calc(var(--nav-width) - 1.8rem); height:auto; min-height:48px;
+    z-index:11; justify-content:flex-start; padding:0.75rem 0.9rem; border-radius:0.5rem;
+  }
+  .bag-quick-toggle .bag-quick-label{ display:inline; }
   header.hero{
     padding: 1.6rem 4.2rem 1.1rem 1.4rem;
     max-width: 42rem;
@@ -449,5 +585,17 @@ body.household-collapsed .household-bar{
   .install-banner, main, footer{
     max-width: 42rem;
     margin-left: auto; margin-right: auto;
+  }
+  
+  /* Bag drawer ajustes para desktop */
+  .bag-toggle{
+    bottom:calc(1.2rem + env(safe-area-inset-bottom, 0px)); right:1.2rem;
+    width:3.2rem; height:3.2rem;
+  }
+  body.household-collapsed .bag-toggle{
+    bottom:calc(1.2rem + env(safe-area-inset-bottom, 0px));
+  }
+  .bag-drawer{
+    width:min(22rem, 35vw);
   }
 }

@@ -34,3 +34,23 @@ var TIER_DAY_LABELS = {
   180: "6 meses",
   365: "1 año"
 };
+
+/**
+ * Configuración del drawer de mochila de emergencia.
+ * Define qué categorías son esenciales para la preparación de la mochila.
+ */
+var BAG_CONFIG = {
+  title: "Mochila de emergencia",
+  intro: "Categorías esenciales para tu preparación familiar",
+  // Categorías incluidas en la mochila de emergencia (por ID)
+  categories: [
+    "agua",
+    "alimentos", 
+    "salud",
+    "higiene",
+    "vestimenta",
+    "energia",
+    "documentos",
+    "herramientas"
+  ]
+};

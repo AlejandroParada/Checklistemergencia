@@ -163,7 +163,11 @@
       if (isReferenceCat(cat) || !cat.tiers) return;
       cat.tiers.forEach(function (tier) {
         tier.items.forEach(function (item) {
-          itemById[item.id] = { item: item, days: tier.days || 7 };
+          itemById[item.id] = {
+            item: item,
+            days: tier.days || 7,
+            categoryId: cat.id
+          };
         });
       });
     });
@@ -406,6 +410,22 @@
     document.getElementById("progressFill").style.width = pct + "%";
     document.getElementById("progressLabel").textContent =
       done + " / " + total + " marcados";
+    updateBagProgress();
+  }
+
+  function updateBagProgress() {
+    var listEl = document.getElementById("bagNavList");
+    if (!listEl) return;
+    listEl.querySelectorAll("button[data-nav-id]").forEach(function (btn) {
+      var categoryId = btn.getAttribute("data-nav-id");
+      var progressEl = btn.querySelector(".bag-category-progress");
+      if (progressEl && categoryId) {
+        progressEl.textContent =
+          getCheckedCountForCategory(categoryId) +
+          " / " +
+          getTotalCountForCategory(categoryId);
+      }
+    });
   }
 
   function renderNav(data, listEl) {
@@ -461,6 +481,10 @@
       tab.classList.toggle("is-active", on);
     });
 
+    document.querySelectorAll("#bagNavList button[data-nav-id]").forEach(function (btn) {
+      btn.classList.toggle("is-active", btn.getAttribute("data-nav-id") === tabId);
+    });
+
     if (options.updateHash !== false) {
       var nextHash = "#" + tabId;
       if (location.hash !== nextHash) {
@@ -497,6 +521,7 @@
 
   function openInfo() {
     closeSideNav();
+    closeBagDrawer({ restoreFocus: false });
     var toggle = document.getElementById("infoToggle");
     var panel = document.getElementById("infoPanel");
     var overlay = document.getElementById("navOverlay");
@@ -512,11 +537,12 @@
     var listEl = document.getElementById("sideNavList");
     if (!toggle || !overlay || !listEl) return;
 
-    renderNav(CHECKLIST, listEl);
+    renderNav(getMainNavCategories(), listEl);
 
     function openNav() {
       if (isDesktop()) return;
       closeInfo();
+      closeBagDrawer({ restoreFocus: false });
       document.body.classList.add("nav-open");
       toggle.setAttribute("aria-expanded", "true");
       toggle.setAttribute("aria-label", "Cerrar menú de categorías");
@@ -537,7 +563,9 @@
 
     document.addEventListener("keydown", function (e) {
       if (e.key !== "Escape") return;
-      if (document.body.classList.contains("info-open")) {
+      if (document.body.classList.contains("bag-open")) {
+        closeBagDrawer();
+      } else if (document.body.classList.contains("info-open")) {
         closeInfo();
         document.getElementById("infoToggle").focus();
       } else if (document.body.classList.contains("nav-open")) {
@@ -788,7 +816,7 @@
     });
     window.addEventListener("load", function () {
       navigator.serviceWorker
-        .register("./sw.js?v=32", { updateViaCache: "none" })
+        .register("./sw.js?v=38", { updateViaCache: "none" })
         .then(function (reg) {
           reg.update();
           if (reg.waiting) {
@@ -848,6 +876,160 @@
     document.title = APP_COPY.title + " — " + APP_COPY.eyebrowTag;
   }
 
+  function isBagCategory(id) {
+    return (
+      typeof BAG_CONFIG !== "undefined" &&
+      BAG_CONFIG.categories &&
+      BAG_CONFIG.categories.indexOf(id) !== -1
+    );
+  }
+
+  function getBagCategories() {
+    return CHECKLIST.filter(function (cat) {
+      return isBagCategory(cat.id);
+    });
+  }
+
+  function getMainNavCategories() {
+    return CHECKLIST.filter(function (cat) {
+      return !isBagCategory(cat.id);
+    });
+  }
+
+  function getCheckedCountForCategory(categoryId) {
+    if (!itemById || !checklistState) return 0;
+    var count = 0;
+    Object.keys(itemById).forEach(function (itemId) {
+      var entry = itemById[itemId];
+      if (entry.categoryId === categoryId && checklistState[itemId]) count++;
+    });
+    return count;
+  }
+
+  function getTotalCountForCategory(categoryId) {
+    if (!itemById) return 0;
+    var count = 0;
+    Object.keys(itemById).forEach(function (itemId) {
+      if (itemById[itemId].categoryId === categoryId) count++;
+    });
+    return count;
+  }
+
+  function renderBagNav(listEl) {
+    listEl.innerHTML = getBagCategories()
+      .map(function (cat) {
+        var progressText =
+          getCheckedCountForCategory(cat.id) +
+          " / " +
+          getTotalCountForCategory(cat.id);
+        var isActive = cat.id === activeTabId;
+        return (
+          "<li>" +
+          '<button type="button" data-nav-id="' +
+          escapeHtml(cat.id) +
+          '" class="bag-nav-item' +
+          (isActive ? " is-active" : "") +
+          '">' +
+          '<span class="emoji" aria-hidden="true">' +
+          escapeHtml(cat.emoji) +
+          "</span>" +
+          '<div class="bag-category-info">' +
+          '<span class="bag-category-title">' +
+          escapeHtml(cat.title) +
+          "</span>" +
+          '<span class="bag-category-progress">' +
+          progressText +
+          "</span>" +
+          "</div></button></li>"
+        );
+      })
+      .join("");
+
+    listEl.querySelectorAll("button[data-nav-id]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        showTab(this.getAttribute("data-nav-id"));
+        closeBagDrawer({ restoreFocus: false });
+      });
+    });
+  }
+
+  function syncBagToggleState(open) {
+    var toggles = [
+      document.getElementById("bagToggle"),
+      document.getElementById("bagNavBtn")
+    ];
+    toggles.forEach(function (el) {
+      if (!el) return;
+      el.setAttribute("aria-expanded", open ? "true" : "false");
+      el.setAttribute(
+        "aria-label",
+        open ? "Cerrar mochila de emergencia" : "Abrir mochila de emergencia"
+      );
+    });
+  }
+
+  function openBagDrawer() {
+    closeInfo();
+    closeSideNav();
+    document.body.classList.add("bag-open");
+    var overlay = document.getElementById("bagOverlay");
+    var drawer = document.getElementById("bagDrawer");
+    syncBagToggleState(true);
+    if (overlay) overlay.hidden = false;
+    if (drawer) {
+      drawer.hidden = false;
+      drawer.setAttribute("aria-modal", "true");
+      var firstBtn = drawer.querySelector("button[data-nav-id]");
+      if (firstBtn) setTimeout(function () { firstBtn.focus(); }, 100);
+    }
+  }
+
+  function closeBagDrawer(options) {
+    options = options || {};
+    document.body.classList.remove("bag-open");
+    var overlay = document.getElementById("bagOverlay");
+    var drawer = document.getElementById("bagDrawer");
+    var navBtn = document.getElementById("bagNavBtn");
+    syncBagToggleState(false);
+    if (options.restoreFocus !== false && navBtn) navBtn.focus();
+    if (overlay) overlay.hidden = true;
+    if (drawer) {
+      drawer.hidden = true;
+      drawer.setAttribute("aria-modal", "false");
+    }
+  }
+
+  function initBagDrawer() {
+    var toggle = document.getElementById("bagToggle");
+    var navBtn = document.getElementById("bagNavBtn");
+    var overlay = document.getElementById("bagOverlay");
+    var closeBtn = document.getElementById("bagClose");
+    var listEl = document.getElementById("bagNavList");
+    if (!toggle || !overlay || !closeBtn || !listEl) return;
+
+    var titleEl = document.getElementById("bagDrawerTitle");
+    var introEl = document.querySelector(".bag-intro");
+    if (typeof BAG_CONFIG !== "undefined") {
+      if (titleEl) titleEl.textContent = BAG_CONFIG.title;
+      if (introEl) introEl.textContent = BAG_CONFIG.intro;
+    }
+
+    renderBagNav(listEl);
+
+    toggle.addEventListener("click", function () {
+      if (document.body.classList.contains("bag-open")) closeBagDrawer();
+      else openBagDrawer();
+    });
+    if (navBtn) {
+      navBtn.addEventListener("click", function () {
+        if (document.body.classList.contains("bag-open")) closeBagDrawer();
+        else openBagDrawer();
+      });
+    }
+    overlay.addEventListener("click", closeBagDrawer);
+    closeBtn.addEventListener("click", closeBagDrawer);
+  }
+
   var root = document.getElementById("checklist");
   if (
     !root ||
@@ -865,6 +1047,7 @@
   fillStaticCopy();
   renderChecklist(CHECKLIST, root, hogar);
   initSideNav();
+  initBagDrawer();
   initThemeToggle();
   initInfoPanel();
   initFontControls();
