@@ -816,7 +816,7 @@
     });
     window.addEventListener("load", function () {
       navigator.serviceWorker
-        .register("./sw.js?v=38", { updateViaCache: "none" })
+        .register("./sw.js?v=39", { updateViaCache: "none" })
         .then(function (reg) {
           reg.update();
           if (reg.waiting) {

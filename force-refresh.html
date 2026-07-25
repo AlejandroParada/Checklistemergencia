@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -25,12 +25,12 @@
       var keys = await caches.keys();
       await Promise.all(keys.map(function (k) { return caches.delete(k); }));
     }
-    msg.innerHTML = 'Listo. Abriendo la app actualizada…<br><span class="ok">v1.8</span>';
+    msg.innerHTML = 'Listo. Abriendo la app actualizada…<br><span class="ok">v1.11</span>';
   } catch (e) {
     msg.textContent = "Limpieza parcial. Redirigiendo…";
   }
   setTimeout(function () {
-    window.location.replace("./index.html?v=32&t=" + Date.now());
+    window.location.replace("./index.html?v=39&t=" + Date.now());
   }, 700);
 })();
 </script>
